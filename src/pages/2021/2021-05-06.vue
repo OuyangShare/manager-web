@@ -1,15 +1,12 @@
 <template>
   <div>
-    <clock></clock>
+    <h1>今天划水一天</h1>
   </div>
 </template>
 
 <script>
-import clock from "@/components/clock.vue";
 export default {
-  components: {
-    clock,
-  },
+  components: {},
 };
 </script>
 
