@@ -4,7 +4,7 @@ const routesArr = [
     name: "wuwuw",
     meta: {
       date: "2021-05-06",
-      desc: "撒娇的骄傲看得见啦",
+      desc: "",
     },
     component: () => import("@/pages/2021/2021-05-06.vue"),
   },
@@ -13,9 +13,9 @@ const routesArr = [
     name: "wuwuw",
     meta: {
       date: "2021-05-07",
-      desc: "撒娇的骄傲看得见啦",
+      desc: "",
     },
-    component: () => import("@/pages/home/index.vue"),
+    component: () => import("@/pages/2021/2021-05-07.vue"),
   },
 ];
 
