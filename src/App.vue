@@ -15,4 +15,7 @@
   border: 1px solid #eeeeee;
   min-height: 80vh;
 }
+.page {
+  text-align: left;
+}
 </style>

@@ -3,7 +3,7 @@
     <el-container>
       <!-- <el-header></el-header> -->
       <el-container>
-        <el-aside width="150px">
+        <el-aside width="200px">
           <el-menu
             v-model="$route.path"
             @open="changeRoute"
@@ -16,10 +16,12 @@
               :key="item.date"
               @click="changeRoute(item)"
               index="item.path"
+              style="padding:unset"
             >
-              <span slot="title"
-                >{{ item.meta.date }} <i class="el-icon-arrow-right"></i>
-              </span>
+              <div slot="title" class="aside-desc" :title="item.meta.desc">
+                {{ item.meta.desc || item.meta.date }}
+                <i class="el-icon-arrow-right"></i>
+              </div>
             </el-menu-item>
           </el-menu>
         </el-aside>
@@ -40,7 +42,7 @@ export default {
   },
   methods: {
     changeRoute({ path }) {
-      console.log("object", 1)
+      console.log("object", 1);
       if (this.$route.path !== path)
         this.$router.push({
           path,
@@ -54,4 +56,8 @@ export default {
 };
 </script>
 
-<style lang="sass"></style>
+<style lang="sass" scoped>
+.aside-desc
+  text-overflow: ellipsis
+  overflow: hidden
+</style>
