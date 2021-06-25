@@ -8,15 +8,24 @@ const routesArr = [
     },
     component: () => import("@/pages/2021/2021-05-12.vue"),
   },
-  // {
-  //   path: "/2021-05-07",
-  //   name: "wuwuw",
-  //   meta: {
-  //     date: "2021-05-07",
-  //     desc: "",
-  //   },
-  //   component: () => import("@/pages/2021/2021-05-07.vue"),
-  // },
+  {
+    path: "/2021-06-25",
+    name: "wuwuw",
+    meta: {
+      date: "2021-06-25",
+      desc: "Number计算问题",
+    },
+    component: () => import("@/pages/2021/2021-06-25.vue"),
+  },
+  {
+    path: "/2021-06-26",
+    name: "wuwuw",
+    meta: {
+      date: "2021-06-26",
+      desc: "Number计算问题解决方案",
+    },
+    component: () => import("@/pages/2021/2021-06-26.vue"),
+  },
 ];
 
 const routes = [
