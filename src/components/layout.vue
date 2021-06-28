@@ -14,8 +14,9 @@
               v-show="item.meta.date"
               :title="item.meta.date"
               :key="item.date"
+              :default-active="$route.path"
               @click="changeRoute(item)"
-              index="item.path"
+              :index="item.path"
               style="padding:unset"
             >
               <div slot="title" class="aside-desc" :title="item.meta.desc">
