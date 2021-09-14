@@ -64,45 +64,39 @@ export default {
   components: {},
   data() {
     return {
-      tableData: [
-        {
-          iiie: 11,
-        },
-      ],
+      tableData: [],
       text: 22222,
       form: { Pt: "str", Pr: "", Pjthread: "str", Pdura: "str" },
     };
   },
   computed: {
     tableKeys() {
-      return Object.keys(this.tableData[0]);
+      return Object.keys(this.tableData[0] || {});
     },
   },
   methods: {
     getFile(e) {
       const para = new FormData();
       para.append("file", e.file);
-      console.log("1", 1);
-      axios.post("/jmx/FileUpLoad", para).then((response) => {
+      axios.post("/api/jmx/FileUpLoad", para).then((response) => {
         this.text = response.data;
-        this.$message.info(response.data || response);
+        this.$message.info("操作成功");
         console.log(response);
       });
     },
     reSearch() {
-      axios.post("/jmx/jmxList").then((response) => {
+      axios.post("/api/jmx/jmxList").then((response) => {
         this.tableData = response.data;
-        this.$message.info(response.data || response);
+        this.$message.info("操作成功");
         console.log(response);
       });
     },
     submit() {
       let para = Object.assign({}, this.form);
       para.Pr = para.Pr.split(/\s+/);
-      console.log("para", para);
-      axios.post("/jmx/jmxList", para).then((response) => {
-        this.text = response;
-        this.$message.info(response.data || response);
+      axios.post("/api/jmx/jmxList").then((response) => {
+        this.tableData = response.data;
+        this.$message.info("操作成功");
         console.log(response);
       });
     },
