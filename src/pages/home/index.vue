@@ -94,7 +94,7 @@ export default {
     submit() {
       let para = Object.assign({}, this.form);
       para.Pr = para.Pr.split(/\s+/);
-      axios.post("/api/jmx/jmxList").then((response) => {
+      axios.post("/api/jmx/runPerformance").then((response) => {
         this.tableData = response.data;
         this.$message.info("操作成功");
         console.log(response);
