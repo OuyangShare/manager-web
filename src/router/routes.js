@@ -26,6 +26,24 @@ const routesArr = [
     },
     component: () => import("@/pages/2021/2021-06-26.vue"),
   },
+  {
+    path: "/fupan",
+    name: "wuwuw",
+    meta: {
+      date: "2021-10-29-0",
+      desc: "午间复盘",
+    },
+    component: () => import("@/pages/2021/fupan.vue"),
+  },
+  {
+    path: "/zijin",
+    name: "wuwuw",
+    meta: {
+      date: "2021-10-29-1",
+      desc: "资金流向",
+    },
+    component: () => import("@/pages/2021/zijin.vue"),
+  },
 ];
 
 const routes = [
