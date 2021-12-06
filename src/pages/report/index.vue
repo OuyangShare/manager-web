@@ -1,5 +1,6 @@
 <template>
   <div class="page">
+    <div v-show="showCharts" class="charts"></div>
     <el-form size="small" ref="form" :model="form" label-width="80px">
       <el-row :gutter="20">
         <el-col :span="8">
@@ -127,6 +128,7 @@
 </template>
 <script>
 import axios from "axios";
+import * as echarts from "echarts";
 const dayjs = require("dayjs");
 
 export default {
@@ -150,6 +152,7 @@ export default {
         endDate: "",
         creator: "",
       },
+      showCharts: false,
     };
   },
   computed: {
@@ -182,6 +185,27 @@ export default {
     getCountDate() {
       axios.post("/case/caseReport").then((response) => {
         console.log(response);
+        this.showCharts = true;
+        const myChart = echarts.init(
+          document.getElementsByClassName("charts")[0]
+        );
+        myChart.setOption({
+          title: {
+            text: "ECharts 入门示例",
+          },
+          tooltip: {},
+          xAxis: {
+            data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"],
+          },
+          yAxis: {},
+          series: [
+            {
+              name: "销量",
+              type: "bar",
+              data: [5, 20, 36, 10, 10, 20],
+            },
+          ],
+        });
       });
     },
     cogradientResult() {
@@ -295,4 +319,8 @@ export default {
 <style lang="sass" scoped>
 // p:nth-child(2)
 //     background: #eeeeee
+
+.charts
+  width: 90vw
+  height: 300px
 </style>
