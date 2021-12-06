@@ -1,6 +1,5 @@
 <template>
-  <!-- <div><canvas id="canvas" style="height: 100%"></canvas></div> -->
-  <div></div>
+  <div><canvas id="canvas" style="height: 100%"></canvas></div>
 </template>
 
 <script>
@@ -345,23 +344,23 @@ export default {
     },
   },
   mounted() {
-    // // this.WINDOW_WIDTH = document.documentElement.clientWidth - 300;
-    // // this.WINDOW_HEIGHT = document.documentElement.clientHeight;
-    // this.WINDOW_WIDTH = 800;
-    // this.WINDOW_HEIGHT = 200;
-    // this.MARGIN_LEFT = Math.round(this.WINDOW_WIDTH / 10);
-    // this.MARGIN_TOP = Math.round(this.WINDOW_HEIGHT / 5);
-    // this.RADIUS = Math.round((this.WINDOW_WIDTH * 4) / 5 / 108) - 1;
-    // const canvas = document.getElementById("canvas");
-    // this.context = canvas.getContext("2d");
-    // this.showtime = new Date();
-    // canvas.width = this.WINDOW_WIDTH;
-    // canvas.height = this.WINDOW_HEIGHT;
-    // let self = this;
-    // setInterval(function () {
-    //   self.render(self.context);
-    //   self.update();
-    // }, 50);
+    // this.WINDOW_WIDTH = document.documentElement.clientWidth - 300;
+    // this.WINDOW_HEIGHT = document.documentElement.clientHeight;
+    this.WINDOW_WIDTH = 800;
+    this.WINDOW_HEIGHT = 200;
+    this.MARGIN_LEFT = Math.round(this.WINDOW_WIDTH / 10);
+    this.MARGIN_TOP = Math.round(this.WINDOW_HEIGHT / 5);
+    this.RADIUS = Math.round((this.WINDOW_WIDTH * 4) / 5 / 108) - 1;
+    const canvas = document.getElementById("canvas");
+    this.context = canvas.getContext("2d");
+    this.showtime = new Date();
+    canvas.width = this.WINDOW_WIDTH;
+    canvas.height = this.WINDOW_HEIGHT;
+    let self = this;
+    setInterval(function () {
+      self.render(self.context);
+      self.update();
+    }, 50);
   },
 };
 </script>

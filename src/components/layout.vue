@@ -2,7 +2,7 @@
   <div>
     <!-- <draggable v-model="tags" :move="getdata" @update="datadragEnd">
     </draggable> -->
-    <draggable
+    <!-- <draggable
       v-model="myArray"
       group="people"
       @start="drag = true"
@@ -11,7 +11,7 @@
       <div v-for="element in myArray" :key="element.id">
         <el-button type="danger" @click="drawer = true">菜单列表</el-button>
       </div>
-    </draggable>
+    </draggable> -->
     <div class="top">
       <el-button type="danger" @click="drawer = true">菜单列表</el-button>
     </div>
@@ -37,15 +37,15 @@
         </el-button>
       </div>
     </el-drawer>
-    <router-view></router-view>
+    <router-view style="margin-top: 40px"></router-view>
   </div>
 </template>
 
 <script>
-import draggable from "vuedraggable";
+// import draggable from "vuedraggable";
 export default {
   components: {
-    draggable,
+    // draggable,
   },
   data() {
     return {
