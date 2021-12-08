@@ -3,9 +3,10 @@
     <div v-show="showCharts" class="charts"></div>
     <el-form size="small" ref="form" :model="form" label-width="80px">
       <el-row :gutter="20">
-        <el-col :span="8">
-          <el-form-item label="返款周期" prop="cycleDate">
+        <el-col :span="6">
+          <el-form-item label="时间" prop="cycleDate">
             <el-date-picker
+              clearable
               v-model="cycleDate"
               type="daterange"
               style="width: 100%"
@@ -17,57 +18,57 @@
             </el-date-picker>
           </el-form-item>
         </el-col>
-        <el-col :span="8">
+        <el-col :span="6">
           <el-form-item label="id" prop="id">
-            <el-input v-model="form.id"></el-input>
+            <el-input clearable v-model="form.id"></el-input>
           </el-form-item>
         </el-col>
-        <el-col :span="8">
+        <el-col :span="6">
           <el-form-item label="planid" prop="planid">
-            <el-input v-model="form.planid"></el-input>
+            <el-input clearable v-model="form.planid"></el-input>
           </el-form-item>
         </el-col>
-        <el-col :span="8">
+        <el-col :span="6">
           <el-form-item label="name" prop="name">
-            <el-input v-model="form.name"></el-input>
+            <el-input clearable v-model="form.name"></el-input>
           </el-form-item>
         </el-col>
-        <el-col :span="8">
+        <el-col :span="6">
           <el-form-item label="source" prop="source">
-            <el-input v-model="form.source"></el-input>
+            <el-input clearable v-model="form.source"></el-input>
           </el-form-item>
         </el-col>
-        <el-col :span="8">
+        <el-col :span="6">
           <el-form-item label="description" prop="description">
-            <el-input v-model="form.description"></el-input>
+            <el-input clearable v-model="form.description"></el-input>
           </el-form-item>
         </el-col>
-        <el-col :span="8">
+        <el-col :span="6">
           <el-form-item label="version" prop="version">
-            <el-input v-model="form.version"></el-input>
+            <el-input clearable v-model="form.version"></el-input>
           </el-form-item>
         </el-col>
-        <el-col :span="8">
+        <el-col :span="6">
           <el-form-item label="owner" prop="owner">
-            <el-input v-model="form.owner"></el-input>
+            <el-input clearable v-model="form.owner"></el-input>
           </el-form-item>
         </el-col>
-        <el-col :span="8">
+        <el-col :span="6">
           <el-form-item label="status" prop="status">
-            <el-input v-model="form.status"></el-input>
+            <el-input clearable v-model="form.status"></el-input>
           </el-form-item>
         </el-col>
-        <el-col :span="8">
+        <el-col :span="6">
           <el-form-item label="type" prop="type">
-            <el-input v-model="form.type"></el-input>
+            <el-input clearable v-model="form.type"></el-input>
           </el-form-item>
         </el-col>
-        <el-col :span="8">
+        <el-col :span="6">
           <el-form-item label="creator" prop="creator">
-            <el-input v-model="form.creator"></el-input>
+            <el-input clearable v-model="form.creator"></el-input>
           </el-form-item>
         </el-col>
-        <el-col :span="8">
+        <el-col :span="6">
           <el-form-item label-width="0">
             <el-button size="small" type="primary" @click="getPlanList"
               >点击查询</el-button
@@ -80,7 +81,11 @@
       <el-button size="small" type="primary" @click="cogradient"
         >同步数据</el-button
       >
-      <el-button size="small" type="success" @click="getCountDate"
+      <el-button
+        size="small"
+        :disabled="!this.multipleSelection.length"
+        type="success"
+        @click="getCountDate"
         >生成统计数据</el-button
       >
       <el-button
@@ -104,7 +109,7 @@
       <el-table-column prop="planid" label="planid"> </el-table-column>
       <el-table-column prop="name" label="name"> </el-table-column>
       <el-table-column prop="source" label="source"> </el-table-column>
-      <el-table-column prop="description" label="description" min-width="100px">
+      <el-table-column prop="description" label="description" min-width="200px">
       </el-table-column>
       <el-table-column prop="version" label="version"> </el-table-column>
       <el-table-column prop="owner" sortable label="owner" min-width="100px">
@@ -113,17 +118,28 @@
       </el-table-column>
       <el-table-column prop="type" label="type"> </el-table-column>
       <el-table-column prop="startDate" label="startDate">
-        <template slot-scope="{ row }">
+        <!-- <template slot-scope="{ row }">
           {{ dayjs(row.startDate).format("YYYY-MM-DD HH:mm:ss") }}
-        </template>
+        </template> -->
       </el-table-column>
       <el-table-column prop="endDate" label="endDate">
-        <template slot-scope="{ row }">
+        <!-- <template slot-scope="{ row }">
           {{ dayjs(row.endDate).format("YYYY-MM-DD HH:mm:ss") }}
-        </template>
+        </template> -->
       </el-table-column>
       <el-table-column prop="creator" label="creator"> </el-table-column>
     </el-table>
+    <el-pagination
+      style="text-align: right; margin: 20px 0"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page="page"
+      :page-sizes="[5, 10, 20, 30, 50]"
+      :page-size="limit"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="initTableData.length"
+    >
+    </el-pagination>
   </div>
 </template>
 <script>
@@ -138,6 +154,9 @@ export default {
       dayjs: dayjs,
       multipleSelection: [],
       tableData: [],
+      initTableData: [],
+      page: 1,
+      limit: 5,
       form: {
         id: "",
         planid: "",
@@ -174,139 +193,133 @@ export default {
     },
   },
   methods: {
+    handleSizeChange(val) {
+      this.page = 1;
+      this.limit = val;
+      this.checkTableData();
+    },
+    handleCurrentChange(val) {
+      this.page = val;
+      this.checkTableData();
+    },
+    checkTableData() {
+      this.tableData = this.initTableData.slice(
+        (this.page - 1) * this.limit,
+        (this.page - 1) * this.limit + this.limit
+      );
+    },
     handleSelectionChange(val) {
       this.multipleSelection = val;
     },
     cogradient() {
-      axios.post("/plan/addPlan").then((response) => {
+      axios.post("/api/plan/addPlan").then((response) => {
         console.log(response);
       });
     },
     getCountDate() {
-      axios.post("/case/caseReport").then((response) => {
-        console.log(response);
-        this.showCharts = true;
-        const myChart = echarts.init(
-          document.getElementsByClassName("charts")[0]
-        );
-        myChart.setOption({
-          title: {
-            text: "ECharts 入门示例",
-          },
-          tooltip: {},
-          xAxis: {
-            data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"],
-          },
-          yAxis: {},
-          series: [
-            {
-              name: "销量",
-              type: "bar",
-              data: [5, 20, 36, 10, 10, 20],
+      axios
+        .post("/api/case/caseReport", {
+          planads: Array.from(this.multipleSelection, (x) => x.planid),
+        })
+        .then((response) => {
+          console.log(response);
+          const initArr = response.data.data;
+          const type0YArr = [];
+          const type1YArr = [];
+          const type2YArr = [];
+          initArr.forEach((x, idx) => {
+            type0YArr[idx] = (
+              (x.ratemode.find((e) => e.type === 0) || {}).passRate * 100
+            ).toFixed(2);
+            type1YArr[idx] = (
+              (x.ratemode.find((e) => e.type === 1) || {}).passRate * 100
+            ).toFixed(2);
+            type2YArr[idx] = (
+              (x.ratemode.find((e) => e.type === 2) || {}).passRate * 100
+            ).toFixed(2);
+          });
+          const myChart = echarts.init(
+            document.getElementsByClassName("charts")[0]
+          );
+          myChart.setOption({
+            title: {
+              text: "测试报告",
             },
-          ],
+            legend: {
+              data: ["冒烟测试通过率", "第一轮测试通过率", "第二轮测试通过率"],
+            },
+            tooltip: {
+              // show:true,
+              // trigger: "axis",
+            },
+            xAxis: {
+              data: Array.from(initArr, (x) => x.versionName),
+            },
+            yAxis: {
+              type: "value",
+              name: "通过率",
+              min: 0,
+              max: 100,
+              position: "left",
+              axisLabel: {
+                formatter: "{value} %",
+              },
+            },
+            series: [
+              {
+                name: "冒烟测试通过率",
+                color: "red",
+                type: "bar",
+                data: type0YArr,
+                label: {
+                  show: true,
+                  position: "top",
+                  valueAnimation: true,
+                },
+              },
+              {
+                name: "第一轮测试通过率",
+                color: "yellow",
+                type: "bar",
+                data: type1YArr,
+                label: {
+                  show: true,
+                  position: "top",
+                  valueAnimation: true,
+                },
+              },
+              {
+                name: "第二轮测试通过率",
+                color: "green",
+                type: "bar",
+                data: type2YArr,
+                label: {
+                  show: true,
+                  position: "top",
+                  valueAnimation: true,
+                },
+              },
+            ],
+          });
+          this.showCharts = true;
         });
-      });
     },
     cogradientResult() {
       axios
-        .post("/case/caseResult", {
+        .post("/api/case/caseResult", {
           planids: Array.from(this.multipleSelection, (x) => x.planid),
         })
         .then((response) => {
+          this.getPlanList();
           console.log(response);
         });
     },
     getPlanList() {
-      this.tableData = [
-        {
-          id: 0,
-          planid: "str",
-          name: "str",
-          source: "str",
-          description: "str",
-          version: "str",
-          owner: "1",
-          status: "str",
-          type: "str",
-          startDate: 1638344063309,
-          endDate: 1638344063309,
-          creator: "str",
-        },
-        {
-          id: 0,
-          planid: "str",
-          name: "str",
-          source: "str",
-          description: "str",
-          version: "str",
-          owner: "2",
-          status: "str",
-          type: "str",
-          startDate: 1638344063309,
-          endDate: 1638344063309,
-          creator: "str",
-        },
-        {
-          id: 0,
-          planid: "str",
-          name: "str",
-          source: "str",
-          description: "str",
-          version: "str",
-          owner: "str",
-          status: "str",
-          type: "str",
-          startDate: 1638344063309,
-          endDate: 1638344063309,
-          creator: "str",
-        },
-        {
-          id: 0,
-          planid: "str",
-          name: "str",
-          source: "str",
-          description: "str",
-          version: "str",
-          owner: "str",
-          status: "str",
-          type: "str",
-          startDate: 1638344063309,
-          endDate: 1638344063309,
-          creator: "str",
-        },
-        {
-          id: 0,
-          planid: "str",
-          name: "str",
-          source: "str",
-          description: "str",
-          version: "str",
-          owner: "str",
-          status: "str",
-          type: "str",
-          startDate: 1638344063309,
-          endDate: 1638344063309,
-          creator: "str",
-        },
-        {
-          id: 0,
-          planid: "str",
-          name: "str",
-          source: "str",
-          description: "str",
-          version: "str",
-          owner: "str",
-          status: "str",
-          type: "str",
-          startDate: 1638344063309,
-          endDate: 1638344063309,
-          creator: "str",
-        },
-      ];
-      axios.post("/plan/ListPlan", this.form).then((response) => {
+      axios.post("/api/plan/ListPlan", this.form).then((response) => {
         console.log(response);
-        this.tableData = response.data;
+        this.initTableData = response.data.data;
+        this.page = 1;
+        this.checkTableData();
       });
     },
   },
