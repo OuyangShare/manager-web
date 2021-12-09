@@ -88,13 +88,13 @@
         @click="getCountDate"
         >生成统计数据</el-button
       >
-      <el-button
+      <!-- <el-button
         size="small"
         type="danger"
         :disabled="!this.multipleSelection.length"
         @click="cogradientResult"
         >同步测试结果</el-button
-      >
+      > -->
     </div>
     <el-table
       size="small"
@@ -128,6 +128,13 @@
         </template> -->
       </el-table-column>
       <el-table-column prop="creator" label="creator"> </el-table-column>
+      <el-table-column prop="" fixed="right" label="操作" width="120">
+        <template slot-scope="{ row }">
+          <el-button type="danger" size="mini" @click="cogradientResult(row)"
+            >同步测试结果</el-button
+          >
+        </template>
+      </el-table-column>
     </el-table>
     <el-pagination
       style="text-align: right; margin: 20px 0"
@@ -304,10 +311,10 @@ export default {
           this.showCharts = true;
         });
     },
-    cogradientResult() {
+    cogradientResult({ row }) {
       axios
         .post("/api/case/caseResult", {
-          planids: Array.from(this.multipleSelection, (x) => x.planid),
+          id: row.planid,
         })
         .then((response) => {
           this.getPlanList();
