@@ -4,6 +4,7 @@
       style="position: absolute; left: 15px; top: 15px"
       size="small"
       v-model="monthDate"
+      :clearable="false"
       format="yyyy 年 MM 月"
       type="month"
       @change="monthChange"
@@ -207,11 +208,11 @@ export default {
 // p:nth-child(2)
 //     background: #eeeeee
 .charts
-    display: inline-block
-    width: 90vw
-    height: 300px
+  display: inline-block
+  width: 90vw
+  height: 300px
 .mid
-    display: inline-block
-    width: 45vw
-    height: 300px
+  display: inline-block
+  width: 45vw
+  height: 300px
 </style>
