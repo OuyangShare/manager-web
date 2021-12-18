@@ -64,6 +64,7 @@ export default {
         return {
           value: x.bugCount,
           name: x.busLineName + " " + (x.bugRate * 100).toFixed(2) + "%",
+          busLineName: x.busLineName,
         };
       });
       console.log(seriesArr);
@@ -84,7 +85,24 @@ export default {
           showContent: true, //默认值true，tooltip主体内容显示策略，只需tooltip触发事件或显示axisPointer而不需要显示内容时可配置该项为false，
           trigger: "item", //默认值'item'，触发类型，默认数据触发，见下图，可选为：'item' | 'axis'
           position: null, //默认值null，位置指定，传入{Array}，如[x, y]， 固定位置[x, y]；传入{Function}，如function([x, y]) {return [newX,newY]}，默认显示坐标为输入参数，用户指定的新坐标为输出返回。
-          formatter: "{c}",
+          formatter: function (params) {
+            console.log(params);
+            const res = params.data;
+            const mapData =
+              (obj.find((x) => x.busLineName == res.busLineName) || {})
+                .bugType || {};
+            console.log(mapData);
+            let backContent = `${res.busLineName}(${res.value})： `;
+            Object.keys(mapData).forEach((e) => {
+              backContent +=
+                "<br/><span style='font-size:12px;line-height:15px'>" +
+                e +
+                "：" +
+                mapData[e] +
+                "</span>";
+            });
+            return backContent;
+          },
           //"{a} < br/>{b} : {c}",默认值null，内容格式器
           //折线（区域）图、柱状（条形）图、K线图 : a（系列名称），b（类目值），c（数值）, d（无）
           //散点图（气泡）图 : a（系列名称），b（数据名称），c（数值数组）, d（无）
@@ -95,61 +113,11 @@ export default {
           hideDelay: 100, //默认值100，隐藏延迟，单位ms
           transitionDuration: 0.4, //默认值0.4，动画变换时长，单位s，如果你希望tooltip的跟随实时响应，showDelay设置为0是关键，同时transitionDuration设0也会有交互体验上的差别。
           enterable: false, //默认值false，鼠标是否可进入详情气泡中，默认为false，如需详情内交互，如添加链接，按钮，可设置为true。
-          backgroundColor: "rgba(0,0,0,0.7)", //默认值，提示背景颜色，默认为透明度为0.7的黑色
+          backgroundColor: "#ffffff", //默认值，提示背景颜色，默认为透明度为0.7的黑色
           borderColor: "#333", //默认值，提示边框颜色
           borderRadius: 4, //默认值，提示边框圆角，单位px，默认为4
           borderWidth: 0, //默认值，提示边框线宽，单位px，默认为0（无边框）
-          padding: 5, //默认值，提示内边距，单位px，默认各方向内边距为5，接受数组分别设定上右下左边距，同css
-          axisPointer: {
-            //默认值，坐标轴指示器，默认type为line，可选为：'line' | 'cross' | 'shadow' | 'none'(无)，指定type后对应style生效，见下
-            //lineStyle设置直线指示器（详见lineStyle）,
-            //crossStyle设置十字准星指示器（详见lineStyle）,
-            //shadowStyle设置阴影指示器（详见shadowStyle），areaStyle.size默认为'auto'自动计算，可指定具体宽度
-            type: "none", //默认值，可选值：'line' | 'cross' | 'shadow' | 'none'(无)，指定type后对应style生效（如下）
-            lineStyle: {
-              //默认值各异，
-              color: "rgba(0,0,0,0.7)", //默认值各异，颜色rgba
-              type: "solid", //默认值，
-              width: 0, //默认值，
-              shadowColor: "rgba(0,0,0,0)", //默认值，折线主线(IE8+)有效，阴影色彩，支持rgba
-              shadowBlur: 5, //默认值，折线主线(IE8+)有效，阴影模糊度，大于0有效
-              shadowOffsetX: 3, //默认值，折线主线(IE8+)有效，阴影横向偏移，正值往右，负值往左
-              shadowOffsetY: 3, //默认值，折线主线(IE8+)有效，阴影纵向偏移，正值往下，负值往上
-            },
-            crossStyle: {
-              //默认值，
-              color: "rgba(0,0,0,0.7)", //默认值，
-              type: "solid", //默认值，
-              width: 0, //默认值，
-              shadowColor: "rgba(0,0,0,0)", //默认值，
-              shadowBlur: 5, //默认值，
-              shadowOffsetX: 3, //默认值，
-              shadowOffsetY: 3, //默认值，
-            },
-            shadowStyle: {
-              //默认值，
-              color: "rgba(0,0,0,0.7)", //默认值，
-              type: "default", //默认值，
-            },
-            textStyle: {
-              //默认值，
-              fontFamily: "Arial, Verdana, sans...", //默认值，
-              fontSize: 12, //默认值，
-              fontStyle: "normal", //默认值，
-              fontWeight: "normal", //默认值，
-            },
-          },
-          textStyle: {
-            //默认值，
-            color: "rgba(0,0,0,0.7)", //默认值各异，
-            decoration: "none", //默认值，
-            align: "rgba(0,0,0,0.7)", //默认值，
-            baseline: "rgba(0,0,0,0.7)", //默认值，
-            fontFamily: "Arial, Verdana, sans...", //默认值，
-            fontSize: 12, //默认值，
-            fontStyle: "normal", //默认值，样式，可选为：'normal' | 'italic' | 'oblique'
-            fontWeight: "normal", //默认值，粗细，可选为：'normal' | 'bold' | 'bolder' | 'lighter' | 100 | 200 |... | 900
-          },
+          padding: 10, //默认值，提示内边距，单位px，默认各方向内边距为5，接受数组分别设定上右下左边距，同css
         },
         label: {
           emphasis: {
@@ -191,6 +159,9 @@ export default {
           },
         ],
       });
+    },
+    pieTipformatter(a) {
+      console.log("a=" + a);
     },
     barBuild(obj) {
       const nameArr = Array.from(obj, (x) => x.busLineName);
