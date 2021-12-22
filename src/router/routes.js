@@ -18,6 +18,16 @@ const routesArr = [
     component: () => import("@/pages/report/index.vue"),
   },
   {
+    path: "/report/:id",
+    name: "wuwuw2",
+    meta: {
+      ignore: true,
+      date: "2021-05-13",
+      desc: "报告",
+    },
+    component: () => import("@/pages/report/index.vue"),
+  },
+  {
     path: "/bugs",
     name: "wuwuw3",
     meta: {

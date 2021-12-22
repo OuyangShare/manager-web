@@ -74,7 +74,9 @@ export default {
     },
   },
   created() {
-    this.routerDateArr = this.$router.options.routes[0].children;
+    this.routerDateArr = this.$router.options.routes[0].children.filter(
+      (x) => !x.ignore
+    );
   },
   mounted() {},
 };

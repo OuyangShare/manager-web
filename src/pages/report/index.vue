@@ -128,7 +128,13 @@
         </template> -->
       </el-table-column>
       <el-table-column prop="creator" label="creator"> </el-table-column>
-      <el-table-column prop="" fixed="right" label="操作" width="120">
+      <el-table-column
+        prop=""
+        v-if="$route.query.id"
+        fixed="right"
+        label="操作"
+        width="120"
+      >
         <template slot-scope="{ row }">
           <el-button type="danger" size="mini" @click="cogradientResult(row)"
             >同步测试结果</el-button
