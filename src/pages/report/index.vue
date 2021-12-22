@@ -317,12 +317,13 @@ export default {
           this.showCharts = true;
         });
     },
-    cogradientResult({ row }) {
+    cogradientResult(row) {
       axios
         .post("/api/case/caseResult", {
           id: row.planid,
         })
         .then((response) => {
+          this.$message.success("操作成功");
           this.getPlanList();
           console.log(response);
         });
