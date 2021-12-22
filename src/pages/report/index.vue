@@ -38,11 +38,11 @@
             <el-input clearable v-model="form.source"></el-input>
           </el-form-item>
         </el-col>
-        <el-col :span="6">
+        <!-- <el-col :span="6">
           <el-form-item label="description" prop="description">
             <el-input clearable v-model="form.description"></el-input>
           </el-form-item>
-        </el-col>
+        </el-col> -->
         <el-col :span="6">
           <el-form-item label="version" prop="version">
             <el-input clearable v-model="form.version"></el-input>
@@ -109,8 +109,8 @@
       <el-table-column prop="planid" label="planid"> </el-table-column>
       <el-table-column prop="name" label="name"> </el-table-column>
       <el-table-column prop="source" label="source"> </el-table-column>
-      <el-table-column prop="description" label="description" min-width="200px">
-      </el-table-column>
+      <!-- <el-table-column prop="description" label="description" min-width="200px">
+      </el-table-column> -->
       <el-table-column prop="version" label="version"> </el-table-column>
       <el-table-column prop="owner" sortable label="owner" min-width="100px">
       </el-table-column>
@@ -175,7 +175,7 @@ export default {
         planid: "",
         name: "",
         source: "",
-        description: "",
+        // description: "",
         version: "",
         owner: "",
         status: "",
