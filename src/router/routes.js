@@ -36,6 +36,15 @@ const routesArr = [
     },
     component: () => import("@/pages/bugs/index.vue"),
   },
+  {
+    path: "/case",
+    name: "wuwuw3",
+    meta: {
+      date: "2021-12-14",
+      desc: "用例统计",
+    },
+    component: () => import("@/pages/case/index.vue"),
+  },
 ];
 
 const routes = [

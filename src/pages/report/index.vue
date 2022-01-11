@@ -130,7 +130,7 @@
       <el-table-column prop="creator" label="creator"> </el-table-column>
       <el-table-column
         prop=""
-        v-if="$route.query.id"
+        v-if="$route.params.id"
         fixed="right"
         label="操作"
         width="120"
