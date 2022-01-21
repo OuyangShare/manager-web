@@ -15,13 +15,13 @@
     >
     </el-date-picker>
     <el-tabs v-model="activeTab" type="card" @tab-click="handleClick">
-      <el-tab-pane label="taExes" name="taExes">
+      <el-tab-pane label="汇总" name="taExes">
         <div v-show="showCharts" class="charts charts_taExes"></div>
       </el-tab-pane>
-      <el-tab-pane label="source" name="source">
+      <el-tab-pane label="产线" name="source">
         <div v-show="showChartsSource" class="charts charts_source"></div>
       </el-tab-pane>
-      <el-tab-pane label="user" name="user">
+      <el-tab-pane label="执行人" name="user">
         <div v-show="showChartsUser" class="charts charts_user"></div>
       </el-tab-pane>
     </el-tabs>
@@ -263,12 +263,14 @@ export default {
       sourceArr.forEach((s, idx) => {
         let valueArr = [];
         namesArr.forEach((e) => {
+          console.log(e);
           const valItem = obj[s].find((x) => {
             return (
               this.dayjs(e).format("YYYY.MM.DD") ===
               this.dayjs(x.executedAt).format("YYYY.MM.DD")
             );
           });
+          console.log(valItem);
           if (valItem) {
             valueArr.push({
               value: valItem.total,
@@ -289,7 +291,7 @@ export default {
           type: "line",
           smooth: true,
           data: valueArr,
-          stack: "s",
+          stack: s,
           // areaStyle: {
           //   opacity: 0.8,
           //   color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
@@ -388,7 +390,7 @@ export default {
           type: "line",
           smooth: true,
           data: valueArr,
-          stack: "s",
+          stack: s,
           label: {
             show: true,
             position: "top",
